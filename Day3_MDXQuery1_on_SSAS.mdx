@@ -1,0 +1,56 @@
+-- Interent sales by subCategory
+select [Measures].[Internet Sales Amount] 
+on columns,
+non empty [Product].[Product Categories].[Subcategory]
+on rows
+from [Adventure Works];
+
+-- Creating a Set
+
+With set [Europe_UK] as
+{[Geography].[Geography].[Country].&[France],
+[Geography].[Geography].[Country].&[Germany],
+[Geography].[Geography].[Country].&[United Kingdom]}
+
+
+Select [Europe_UK]
+on columns,
+[Measures].[Reseller Sales Amount]
+on rows
+from [Adventure Works];
+
+-- creating permanent set, you can also drop the set
+
+create set [Adventure Works].[Europe] as
+{[Geography].[Geography].[Country].&[France],
+[Geography].[Geography].[Country].&[Germany]}
+
+Select [Europe]
+on columns
+from [Adventure Works]
+where [Measures].[Reseller Sales Amount];
+
+--creating subcube, it only exist in this transaction
+
+create subcube [Adventure Works] as
+select [Product].[Product Categories].[Category].&[3]
+on columns,
+[Measures].[Internet Sales Amount]
+on rows
+from [Adventure Works];
+-- example show subcube is working
+
+select [Measures].[Reseller Sales Amount]
+on columns
+from [Adventure Works];
+
+-- Dropping subcube
+drop subcube [Adventure Works];
+
+
+select [Measures].[Internet Sales Amount]
+on columns,
+[Measures].[Internet Sales Amount]
+on rows
+from [Adventure Works];
+

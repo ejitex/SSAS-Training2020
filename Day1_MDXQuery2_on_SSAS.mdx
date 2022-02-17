@@ -1,0 +1,50 @@
+-- DMXQuery 1
+select [measures].[Internet Sales Amount]
+on columns
+from [Adventure Works];
+
+-- DMX query 2 all measure Reseller Sales Amount
+select from [Adventure Works];
+
+-- DMX query 3 default measure
+select [measures].defaultmember
+on columns
+from [Adventure Works];
+
+-- MDX query 4 - base measure
+select MeasureGroupMeasures('Internet Sales')
+on columns
+from [Adventure Works];
+
+-- MDX query 5 using where clause
+select from [Adventure Works]
+where [Measures].[Reseller Sales Amount];
+
+select from [Adventure Works]
+where [Measures].[Internet Sales Amount];
+
+-- MDX Query 6 querying user hierachy
+
+select [Product].[Product Categories].[Category]
+on columns
+from [Adventure Works];
+
+-- MDX to include all measure
+select {[Product].[Product Categories].[Category],[Product].[Product Categories]}
+on columns
+from [Adventure Works];
+
+-- MDX Query columns and rows access
+select non empty {[Date].[Calendar].[Calendar Year],[Date].[Calendar]}
+on columns,
+[Product].[Product Categories].[Category]
+on rows
+from [Adventure Works];
+
+-- MDX Query columns and rows access with where clause
+select non empty {[Date].[Calendar].[Calendar Year],[Date].[Calendar]}
+on columns,
+[Product].[Product Categories].[Category]
+on rows
+from [Adventure Works]
+where [Measures].[Internet Sales Amount];

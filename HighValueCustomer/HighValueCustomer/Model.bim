@@ -1,0 +1,232 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "pl-PL",
+    "dataSources": [
+      {
+        "name": "SqlServer localhost AdventureWorksDW2019",
+        "connectionString": "Provider=SQLNCLI11;Data Source=.;Initial Catalog=AdventureWorksDW2019;Integrated Security=SSPI;Persist Security Info=false",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "Query",
+        "columns": [
+          {
+            "name": "Fullname",
+            "dataType": "string",
+            "sourceColumn": "Fullname",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "EnglishOccupation",
+            "dataType": "string",
+            "sourceColumn": "EnglishOccupation",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "BirthDate",
+            "dataType": "dateTime",
+            "sourceColumn": "BirthDate",
+            "formatString": "General Date",
+            "sourceProviderType": "Date"
+          },
+          {
+            "name": "DateFirstPurchase",
+            "dataType": "dateTime",
+            "sourceColumn": "DateFirstPurchase",
+            "formatString": "General Date",
+            "sourceProviderType": "Date"
+          },
+          {
+            "name": "YearlyIncome",
+            "dataType": "double",
+            "sourceColumn": "YearlyIncome",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "Gender",
+            "dataType": "string",
+            "sourceColumn": "Gender",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "CommuteDistance",
+            "dataType": "string",
+            "sourceColumn": "CommuteDistance",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "MaritalStatus",
+            "dataType": "string",
+            "sourceColumn": "MaritalStatus",
+            "sourceProviderType": "VarChar"
+          },
+          {
+            "name": "OrderQuantity",
+            "dataType": "int64",
+            "sourceColumn": "OrderQuantity",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "SalesAmount",
+            "dataType": "double",
+            "sourceColumn": "SalesAmount",
+            "formatString": "#,0.00 \"USD\";-#,0.00 \"USD\";#,0.00 \"USD\"",
+            "sourceProviderType": "Decimal",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1116\" DisplayName=\"USD\" Symbol=\"USD\" PositivePattern=\"3\" NegativePattern=\"8\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "TotalProductCost",
+            "dataType": "double",
+            "sourceColumn": "TotalProductCost",
+            "formatString": "#,0.00 \"USD\";-#,0.00 \"USD\";#,0.00 \"USD\"",
+            "sourceProviderType": "Decimal",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1116\" DisplayName=\"USD\" Symbol=\"USD\" PositivePattern=\"3\" NegativePattern=\"8\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Freight",
+            "dataType": "double",
+            "sourceColumn": "Freight",
+            "formatString": "#,0.00 \"USD\";-#,0.00 \"USD\";#,0.00 \"USD\"",
+            "sourceProviderType": "Decimal",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1116\" DisplayName=\"USD\" Symbol=\"USD\" PositivePattern=\"3\" NegativePattern=\"8\" /></Format>"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Query",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": [
+                "select",
+                "DC.FirstName +' '+ DC.LastName as Fullname,",
+                "DC.EnglishOccupation,",
+                "DC.BirthDate,",
+                "DC.DateFirstPurchase,",
+                "DC.YearlyIncome,",
+                "DC.Gender,",
+                "DC.CommuteDistance,",
+                "DC.MaritalStatus,",
+                "FiS.OrderQuantity,",
+                "FiS.SalesAmount,",
+                "FiS.TotalProductCost,",
+                "FiS.Freight",
+                "from DimCustomer as DC",
+                "inner join [dbo].[FactInternetSales] FiS",
+                "on DC.CustomerKey = FiS.CustomerKey",
+                "where FiS.SalesAmount >= 3000;"
+              ],
+              "dataSource": "SqlServer localhost AdventureWorksDW2019"
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select",
+                  "DC.FirstName +' '+ DC.LastName as Fullname,",
+                  "DC.EnglishOccupation,",
+                  "DC.BirthDate,",
+                  "DC.DateFirstPurchase,",
+                  "DC.YearlyIncome,",
+                  "DC.Gender,",
+                  "DC.CommuteDistance,",
+                  "DC.MaritalStatus,",
+                  "FiS.OrderQuantity,",
+                  "FiS.SalesAmount,",
+                  "FiS.TotalProductCost,",
+                  "FiS.Freight",
+                  "from DimCustomer as DC",
+                  "inner join [dbo].[FactInternetSales] FiS",
+                  "on DC.CustomerKey = FiS.CustomerKey",
+                  "where FiS.SalesAmount >= 3000;</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": [
+              "select",
+              "DC.FirstName +' '+ DC.LastName as Fullname,",
+              "DC.EnglishOccupation,",
+              "DC.BirthDate,",
+              "DC.DateFirstPurchase,",
+              "DC.YearlyIncome,",
+              "DC.Gender,",
+              "DC.CommuteDistance,",
+              "DC.MaritalStatus,",
+              "FiS.OrderQuantity,",
+              "FiS.SalesAmount,",
+              "FiS.TotalProductCost,",
+              "FiS.Freight",
+              "from DimCustomer as DC",
+              "inner join [dbo].[FactInternetSales] FiS",
+              "on DC.CustomerKey = FiS.CustomerKey",
+              "where FiS.SalesAmount >= 3000;"
+            ]
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Query"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": [
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select",
+              "DC.FirstName +' '+ DC.LastName as Fullname,",
+              "DC.EnglishOccupation,",
+              "DC.BirthDate,",
+              "DC.DateFirstPurchase,",
+              "DC.YearlyIncome,",
+              "DC.Gender,",
+              "DC.CommuteDistance,",
+              "DC.MaritalStatus,",
+              "FiS.OrderQuantity,",
+              "FiS.SalesAmount,",
+              "FiS.TotalProductCost,",
+              "FiS.Freight",
+              "from DimCustomer as DC",
+              "inner join [dbo].[FactInternetSales] FiS",
+              "on DC.CustomerKey = FiS.CustomerKey",
+              "where FiS.SalesAmount >= 3000;</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+            ]
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}

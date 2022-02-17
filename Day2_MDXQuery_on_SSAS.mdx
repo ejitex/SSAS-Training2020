@@ -1,0 +1,172 @@
+-- MDX Query
+select [Product].[Category].[All Products]
+on columns
+from [Adventure Works];
+
+select [Product].[Category].members
+on columns
+from [Adventure Works];
+
+-- MDX Query acessing individual members
+select [Product].[Category].&[1]
+on columns
+from [Adventure Works];
+
+select [Product].[Category].[Bikes]
+on columns
+from [Adventure Works];
+
+select [Product].[Product Model Lines].[Product Line].&[S]
+on columns
+from [Adventure Works];
+
+select non empty {[Date].[Calendar].[Calendar Year],[Date].[Calendar]}
+on columns,
+
+non empty {[Product].[Product Model Lines].[Model].&[HL Touring Frame], 
+[Product].[Product Model Lines].[Model].&[HL Touring Handlebars], 
+[Product].[Product Model Lines].[Model].&[HL Touring Seat/Saddle],
+[Product].[Product Model Lines].[Model].&[Touring Pedal],
+[Product].[Product Model Lines].[Model].&[Touring Tire]
+}
+on rows 
+from [Adventure Works];
+
+
+select non empty {[Product].[Product Model Lines].[Model].&[HL Touring Frame], 
+[Product].[Product Model Lines].[Model].&[HL Touring Handlebars], 
+[Product].[Product Model Lines].[Model].&[HL Touring Seat/Saddle],
+[Product].[Product Model Lines].[Model].&[Touring Pedal],
+[Product].[Product Model Lines].[Model].&[Touring Tire]
+} on columns,
+
+non empty {[Geography].[Geography].[City], [Geography].[Geography]}
+on rows 
+from [Adventure Works];
+
+
+select non empty [Product].[Product Categories].members
+on columns
+from [Adventure Works];
+
+-- Internet monthly sales
+
+select [Measures].[Internet Sales Amount]
+on columns,
+non empty crossjoin([Date].[Calendar].[Calendar Year],[Date].[Month of Year].[Month of Year])
+on rows
+from [Adventure Works];
+
+-- hierachy and level members
+
+select non empty [Product].[Category].members
+on columns,
+
+non empty [Geography].[Geography].[Country]
+on rows
+from [Adventure Works];
+
+-- Internet Sales Bikes and children
+
+select [Measures].[Internet Sales Amount]
+on columns,
+[Product].[Product Categories].[Category].&[1].children
+on rows
+from [Adventure Works];
+
+
+-- Children: bring you one step downward e.g Internet Sales Clothing and children
+select [Measures].[Internet Sales Amount]
+on columns,
+non empty [Product].[Product Categories].[Category].&[3].children
+on rows
+from [Adventure Works];
+
+-- Parent: bring you one step upward
+select [Product].[Product Categories].[Subcategory].&[1].parent
+on columns
+from [Adventure Works];
+
+-- siblings
+select [Product].[Product Categories].[Category].[Bikes].siblings
+on columns
+from 
+[Adventure Works];
+
+-- descendants
+
+Select [Measures].[Internet Sales Amount]
+on columns,
+descendants([Customer].[Customer Geography].[Country].&[France], 
+[Customer].[Customer Geography].[City])
+on rows
+from [Adventure Works];
+
+Select [Measures].[Internet Sales Amount]
+on columns,
+ancestors([Customer].[Customer Geography].[City].[Paris],
+[Customer].[Customer Geography].[Country])
+on rows
+from [Adventure Works]
+
+-- where Clause
+
+select {[Product].[Product Categories].[Category],[Product].[Product Categories]}
+on columns
+from [Adventure Works]
+where [Measures].[Reseller Sales Amount];
+
+-- Sales territory excluding the USA
+
+select {[Product].[Product Categories].[Category],[Product].[Product Categories]}
+on columns
+from [Adventure Works]
+where [Sales Territory].[Sales Territory].[Country] 
+- [Sales Territory].[Sales Territory].[Country].&[United States];
+
+select {[Product].[Product Categories].[Category],[Product].[Product Categories]}
+on columns
+from [Adventure Works]
+where ([Customer].[Customer Geography].[Country].[United Kingdom]
+,[Measures].[Internet Sales Amount]);
+
+select {[Sales Territory].[Sales Territory].[Country], [Sales Territory].[Sales Territory]}
+on columns
+from [Adventure Works]
+where ([Customer].[Customer Geography].[Country],[Measures].[Internet Sales Amount]);
+
+
+select [Date].[Calendar].[Calendar Year].item(6)
+on columns
+from [Adventure Works];
+
+select [Date].[Calendar].[Calendar Year].members(6)
+on columns
+from [Adventure Works];
+
+
+select subset([Date].[Calendar].[Calendar Year],6,7)
+on columns
+from [Adventure Works];
+
+select [Geography].[Country].members
+on columns,
+order(filter([Product].[Category].members,Measures.[Reseller Sales Amount]> 500000), 
+Measures.[Reseller Sales Amount],basc)
+on rows
+from [Adventure Works];
+
+-- Showing the grandtotal of the results rather precaluclated Total Reseller Sales Amount
+select [Geography].[Country].members
+on columns,
+order(Visualtotals(filter([Product].[Category].members,Measures.[Reseller Sales Amount]> 500000)), 
+Measures.[Reseller Sales Amount],basc)
+on rows
+from [Adventure Works];
+
+select 
+{[Measures].[Reseller Sales Amount],
+[Measures].[Reseller Total Product Cost],
+[Measures].[Reseller Gross Profit]}
+on columns
+from [Adventure Works];

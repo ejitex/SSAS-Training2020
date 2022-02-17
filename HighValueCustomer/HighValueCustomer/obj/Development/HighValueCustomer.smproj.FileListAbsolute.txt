@@ -1,0 +1,7 @@
+C:\Users\48502\Documents\R-Training\Training\SSAS\HighValueCustomer\HighValueCustomer\bin\Model.asdatabase
+C:\Users\48502\Documents\R-Training\Training\SSAS\HighValueCustomer\HighValueCustomer\bin\Model.deploymenttargets
+C:\Users\48502\Documents\R-Training\Training\SSAS\HighValueCustomer\HighValueCustomer\bin\Model.deploymentoptions
+C:\Users\48502\Documents\R-Training\Training\SSAS\HighValueCustomer\HighValueCustomer\obj\Development\HighValueCustomer.smproj.CoreCompileInputs.cache
+C:\Users\48502\Documents\R-Training\Training\SSAS\HighValueCustomer\HighValueCustomer\obj\Development\Model.asdatabase
+C:\Users\48502\Documents\R-Training\Training\SSAS\HighValueCustomer\HighValueCustomer\obj\Development\Model.deploymentoptions
+C:\Users\48502\Documents\R-Training\Training\SSAS\HighValueCustomer\HighValueCustomer\obj\Development\Model.deploymenttargets

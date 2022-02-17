@@ -1,0 +1,18 @@
+select [Measures].[Sales Amount] 
+on columns
+from [cubeAdv1];
+
+
+select [Measures].[Tax Amt]
+on columns
+from [cubeAdv1];
+
+select [Measures].[Total Product Cost]
+on columns
+from [cubeAdv1];
+
+select [Measures].[Total Product Cost]
+on columns,
+non empty [Dim Sales Territory].[SalesHierarchy].[Sales Territory Country]
+on rows
+from [cubeAdv1];
